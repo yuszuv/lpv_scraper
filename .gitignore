@@ -1,0 +1,26 @@
+# Installation
+!Gemfile.lock
+
+tmp/
+
+# Logs
+log/
+
+# DB stuff
+db/*.sqlite
+
+# Application processes
+/.overmind*
+
+# Application settings
+/.env
+!/.env*-*
+
+# Tests
+/spec/examples.txt
+/coverage
+
+# Assets
+/public/uploads
+
+/.bundle
