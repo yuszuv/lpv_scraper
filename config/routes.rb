@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LpvScraper
+module LPVScraper
   class Routes < Hanami::Routes
     root { "Hello from Hanami" }
   end

@@ -2,7 +2,7 @@
 
 require "dry/types"
 
-module LpvScraper
+module LPVScraper
   Types = Dry.Types
 
   module Types

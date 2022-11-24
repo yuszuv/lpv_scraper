@@ -1,6 +1,7 @@
 # Installation
 !Gemfile.lock
 
+bin/
 tmp/
 
 # Logs

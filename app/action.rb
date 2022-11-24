@@ -3,7 +3,7 @@
 
 require "hanami/action"
 
-module LpvScraper
+module LPVScraper
   class Action < Hanami::Action
   end
 end

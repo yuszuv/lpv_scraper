@@ -2,7 +2,10 @@
 
 require "hanami"
 
-module LpvScraper
+module LPVScraper
   class App < Hanami::App
+    config.inflections do |inflections|
+      inflections.acronym "LPV"
+    end
   end
 end
