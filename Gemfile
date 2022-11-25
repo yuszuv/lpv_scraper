@@ -13,6 +13,7 @@ gem "rom", "~> 5.3"
 gem "rom-csv", github: "yuszuv/rom-csv", branch: "master"
 
 gem "nokogiri"
+gem "babosa"
 
 group :development, :test do
   gem "dotenv"
