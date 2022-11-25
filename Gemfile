@@ -3,11 +3,9 @@
 source "https://rubygems.org"
 
 gem "hanami", "~> 2.0"
-gem "hanami-router", "~> 2.0"
-gem "hanami-controller", "~> 2.0"
-gem "hanami-validations", "~> 2.0"
 
 gem "dry-types", "~> 1.0", ">= 1.6.1"
+gem "dry-schema"
 gem "puma"
 gem "rake"
 
