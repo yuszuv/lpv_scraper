@@ -4,6 +4,8 @@ require 'dry-schema'
 
 module LPVScraper
   class ScrapeLPV
+    include Deps["persistence.rom"]
+
     BASE_URL = "https://lpv-prignitz-ruppin.de"
     NEWS_PAGE_TEMPLATE = "/nachrichtenliste.html?page_n22=%d"
 
@@ -22,13 +24,14 @@ module LPVScraper
 
     def call
       (1..5)
-        .flat_map(&news_page_fetcher)
-        .map(&article_fetcher)
+        .flat_map(&aggregate_article_links)
+        .map(&fetch_article)
+        .then(&persist_articles)
     end
 
     private
 
-    def news_page_fetcher
+    def aggregate_article_links
       -> (page_number) {
         uri = URI.join(BASE_URL, NEWS_PAGE_TEMPLATE % page_number)
         res = Nokogiri::HTML5(URI.open(uri))
@@ -42,8 +45,11 @@ module LPVScraper
       }
     end
 
-    def article_fetcher
+    def fetch_article
       -> (url) {
+        # TODO add logger
+        puts "fetching #{url} ..."
+
         doc = Nokogiri::HTML5(url)
 
         article = doc.at_css('.mod_newsreader')
@@ -59,7 +65,7 @@ module LPVScraper
             .at_css('p.info')
             .children.last
             .text.gsub(/^\s*von\s*/,'').strip,
-          html: article.css('.layout_full > div').map(&:to_s).join,
+          html: article.css('.layout_full > div').map(&:to_s).join.gsub(/>\s+</,"><"),
           downloads: article.css('.enclosure .download-element a')
             .map do |node|
               { title: node["title"],
@@ -71,6 +77,15 @@ module LPVScraper
           result.to_h
         else 
           raise result.errors.to_h.to_s
+        end
+      }
+    end
+
+    def persist_articles
+      -> (arr) {
+        arr.each do |article|
+          cmd = rom.relations[:articles].command(:create, result: :one)
+          cmd.(**article)
         end
       }
     end

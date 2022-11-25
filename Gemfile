@@ -11,6 +11,9 @@ gem "dry-types", "~> 1.0", ">= 1.6.1"
 gem "puma"
 gem "rake"
 
+gem "rom", "~> 5.3"
+gem "rom-csv", github: "yuszuv/rom-csv", branch: "master"
+
 gem "nokogiri"
 
 group :development, :test do
@@ -19,6 +22,7 @@ end
 
 group :cli, :development do
   gem "hanami-reloader"
+  gem "byebug"
 end
 
 group :cli, :development, :test do
