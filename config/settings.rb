@@ -7,6 +7,8 @@ module LPVScraper
     # setting :my_flag, default: false, constructor: Types::Params::Bool
 
     setting :csv_file, constructor: Types::String
+    setting :base_url, constructor: Types::String
+    setting :news_path, constructor: Types::String
     
     def image_directory
       File.expand_path("../images/", csv_file)

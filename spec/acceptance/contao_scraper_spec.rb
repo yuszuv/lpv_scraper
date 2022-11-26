@@ -1,4 +1,4 @@
-RSpec.describe LPVScraper::ScrapeLPV do
+RSpec.describe LPVScraper::ContaoScraper do
   subject(:app) do
     described_class.new(
       contao_spider: contao_spider,
@@ -8,6 +8,8 @@ RSpec.describe LPVScraper::ScrapeLPV do
       repo: repo,
     )
   end
+
+  let(:args) { {} }
 
   let(:html) { double("html") }
   let(:data) { double("data") }
@@ -42,7 +44,7 @@ RSpec.describe LPVScraper::ScrapeLPV do
       allow(repo).to receive(:create).with(result_data).and_return(tuple)
 
       # expect(app.()).to eq [tuple]
-      app.()
+      app.(**args)
     end
   end
 

@@ -29,7 +29,6 @@ module LPVScraper
     private
 
     def expand_urls(url: settings.base_url, path: settings.news_path, pages: [""])
-      byebug
       pages.map { URI(url % [path, _1]) }
     end
 
