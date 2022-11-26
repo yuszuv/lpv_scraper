@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'dry-schema'
 
 module LPVScraper
-  class ScrapeLPV
+  class ContaoScraper
     include Deps[
       "persistence.rom",
       "settings",
@@ -15,14 +15,10 @@ module LPVScraper
       repo: "articles_repo",
     ]
 
-    BASE_URL = "https://lpv-prignitz-ruppin.de"
-    NEWS_PAGE_TEMPLATE = "/nachrichtenliste.html?page_n22=%d"
-
-    def call
-      [1]
-        .map { URI.join(BASE_URL, NEWS_PAGE_TEMPLATE % _1) }
-        .map(&fetch_html)
-        .reduce([]) { |arr, html| arr += contao_spider.(html).map(&:itself) }
+    def call(...)
+      expand_urls(...)
+        .flat_map(&fetch_html)
+        .flat_map(&extract_links)
         .map(&fetch_html)
         .map(&wordpress_mapper)
         .map(&validate)
@@ -31,6 +27,15 @@ module LPVScraper
     end
 
     private
+
+    def expand_urls(url: settings.base_url, path: settings.news_path, pages: [""])
+      byebug
+      pages.map { URI(url % [path, _1]) }
+    end
+
+    def extract_links
+      -> (html) { contao_spider.(html).map(&:itself) }
+    end
 
     def persist
       -> (result) {
