@@ -38,11 +38,11 @@ module LPVScraper
       end
 
       def persist
-        -> (result) {
-          if result.success?
-            repo.create(result.to_h)
+        -> (validation) {
+          if validation.success?
+            repo.create(validation.to_h)
           else
-            logger.error errors: result.errors.to_h
+            logger.error errors: validation.errors.to_h
           end
         }
       end

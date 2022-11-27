@@ -6,13 +6,12 @@ module LPVScraper
     class Extractor
       def call(url)
         url
-          .then(&URI.method(:open))
-          .read
+          .then { URI.open(_1) }.read
           .then{ Nokogiri::HTML5(_1) }
       end
 
       def to_proc
-        -> (url) { call(url) }
+        method(:call).to_proc
       end
     end
   end

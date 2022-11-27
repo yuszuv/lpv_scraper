@@ -25,7 +25,6 @@ RSpec.describe LPVScraper::Contao::Scraper do
   let(:repo) { instance_double("LPVScraper::ArticlesRepo") }
 
   context "with everything set up correctly" do
-
     it "runs successfully" do
       expect(fetch_html).to receive(:call).at_least(:once).and_return(html)
       expect(fetch_html).to receive(:to_proc).at_least(:once).and_return(->(x) { fetch_html.call(x) })
@@ -43,8 +42,10 @@ RSpec.describe LPVScraper::Contao::Scraper do
 
       allow(repo).to receive(:create).with(result_data).and_return(tuple)
 
-      # expect(app.()).to eq [tuple]
-      app.(**args)
+      res = app.(**args)
+
+      expect(res).to be_a Array
+      expect(res.size).to eq 10
     end
   end
 

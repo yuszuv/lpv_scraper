@@ -3,13 +3,10 @@ require 'babosa'
 module LPVScraper
   module Wordpress
     class Mapper
-      include Deps["inflector"]
+      include Deps["inflector", "settings"]
 
       HREF_REGEXP = /(?<=href=")(\S+?)(?=")/
-        SRC_REGEXP = /(?<=src=")(\S+?)(?=")/
-
-        # TODO move to settings??
-        BASE_URL = "https://lpv-prignitz-ruppin.de"
+      SRC_REGEXP = /(?<=src=")(\S+?)(?=")/
 
       def call(html)
         {
@@ -25,7 +22,7 @@ module LPVScraper
       end
 
       def to_proc
-        -> { call(_1) }
+        method(:call).to_proc
       end
 
       private
@@ -46,8 +43,8 @@ module LPVScraper
           .join
           .gsub(/>\s+</,"><")
           .gsub(/\n/,'')
-          .gsub(HREF_REGEXP) { |m| URI::DEFAULT_PARSER.make_regexp.match(m) ? m : URI.join(BASE_URL, m) }
-          .gsub(SRC_REGEXP) { |m| URI::DEFAULT_PARSER.make_regexp.match(m) ? m : URI.join(BASE_URL, m) }
+          .gsub(HREF_REGEXP) { |m| URI::DEFAULT_PARSER.make_regexp.match(m) ? m : URI.join(settings.base_url, m) }
+          .gsub(SRC_REGEXP) { |m| URI::DEFAULT_PARSER.make_regexp.match(m) ? m : URI.join(settings.base_url, m) }
       end
 
       def extract_author(article)
@@ -76,14 +73,14 @@ module LPVScraper
       def extract_attachments(article)
         article
           .css('.enclosure .download-element a')
-          .map { URI.join(BASE_URL, _1["href"]).to_s }
+          .map { URI.join(settings.base_url, _1["href"]).to_s }
           .join("||")
       end
 
       def extract_image_urls(article)
         article
           .css('div .image_container a')
-          .map{ URI.join(BASE_URL, _1["href"]).to_s }
+          .map{ URI.join(settings.base_url, _1["href"]).to_s }
           .join("||")
       end
     end

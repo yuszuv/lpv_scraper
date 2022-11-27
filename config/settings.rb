@@ -2,10 +2,6 @@
 
 module LPVScraper
   class Settings < Hanami::Settings
-    # Define your app settings here, for example:
-    #
-    # setting :my_flag, default: false, constructor: Types::Params::Bool
-
     setting :csv_file, constructor: Types::String
     setting :base_url, constructor: Types::String
     setting :news_path, constructor: Types::String

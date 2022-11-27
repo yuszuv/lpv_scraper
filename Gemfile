@@ -17,14 +17,11 @@ gem "babosa"
 
 group :development, :test do
   gem "dotenv"
+  gem "byebug"
 end
 
 group :cli, :development do
   gem "hanami-reloader"
-end
-
-group :cli, :development, :test do
-  gem "byebug"
 end
 
 group :cli, :development, :test do

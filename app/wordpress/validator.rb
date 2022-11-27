@@ -18,7 +18,7 @@ module LPVScraper
       end
 
       def to_proc
-        -> { call(_1) }
+        method(:call).to_proc
       end
     end
   end
