@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-RSpec.describe LPVScraper::ContaoSpider do
+RSpec.describe LPVScraper::Contao::Spider do
   let(:input) { Nokogiri::HTML5(File.open(input_path).read) }
   let(:input_path) { SPEC_ROOT.join("fixtures/archive.html") }
 

@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-RSpec.describe LPVScraper::WordpressMapper do
+RSpec.describe LPVScraper::Wordpress::Mapper do
   subject(:mapper) { described_class.new }
 
   let(:input) { Nokogiri::HTML5(File.open(input_path)) }

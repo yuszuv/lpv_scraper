@@ -1,4 +1,4 @@
-RSpec.describe LPVScraper::ContaoExtractor, type: :webmock do
+RSpec.describe LPVScraper::Contao::Extractor, type: :webmock do
   let(:url) { URI("https://lpv-prignitz-ruppin.de/nachrichten/landwirtschaft-und-naturschutz.html") }
 
   let(:result) { subject.(url) }

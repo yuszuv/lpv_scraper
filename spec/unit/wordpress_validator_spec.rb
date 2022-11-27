@@ -1,4 +1,4 @@
-RSpec.describe LPVScraper::WordpressValidator do
+RSpec.describe LPVScraper::Wordpress::Validator do
   let(:valid_input) do
     { :author=>"Jakob Schenk",
       :content=> "<div class=\"ce_text block\">foobar</div>",

@@ -1,4 +1,4 @@
-RSpec.describe LPVScraper::ContaoScraper do
+RSpec.describe LPVScraper::Contao::Scraper do
   subject(:app) do
     described_class.new(
       contao_spider: contao_spider,
