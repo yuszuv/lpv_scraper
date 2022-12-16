@@ -23,7 +23,7 @@ module LPVScraper
           .map(&fetch_html)
           .map(&wordpress_mapper)
           .map(&validate)
-        # .then(&save_images)
+        # .then(&save_images) # TODO
           .map(&persist)
       end
 
